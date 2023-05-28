@@ -1,0 +1,8 @@
+{
+    "stack_name": "stack_name",
+    "s3_bucket": "s3_bucket",
+    "s3_prefix": "s3_prefix",
+    "region": "us-east-1",
+    "version": "0.0.1",
+    "_new_lines": "\r"
+}
