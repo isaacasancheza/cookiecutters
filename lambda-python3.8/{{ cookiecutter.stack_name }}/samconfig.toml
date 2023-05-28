@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "{{ cookiecutter.stack_name }}"
+s3_bucket = "{{ cookiecutter.s3_bucket }}"
+s3_prefix = "{{ cookiecutter.s3_prefix }}"
+region = "{{ cookiecutter.region }}"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
