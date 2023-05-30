@@ -2,8 +2,22 @@ AWSTemplateFormatVersion: 2010-09-09
 
 Transform: AWS::Serverless-2016-10-31
 
+Parameters:
+  GitHubRoleNameParameter:
+    Type: String
+  GitHubRepositoryParameter:
+    Type: String
+  GitHubRolePolicyNameParameter:
+    Type: String
+
 Resources:
-  Bucket:
-    Type: AWS::S3::Bucket
+  GitHubStack:
+    Type: AWS::Serverless::Application
     Properties:
-      BucketName: bucket
+      Location: ./stacks/github.yaml
+      Parameters:
+        GitHubRoleNameParameter: !Ref GitHubRoleNameParameter
+        GitHubRepositoryParameter: !Ref GitHubRepositoryParameter
+        GitHubRolePolicyNameParameter: !Ref GitHubRolePolicyNameParameter
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete

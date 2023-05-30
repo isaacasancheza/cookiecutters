@@ -1,11 +1,21 @@
 version = {{ cookiecutter.version }}
-[default]
+
+[default] 
+
 [default.deploy]
+
 [default.deploy.parameters]
 stack_name = "{{ cookiecutter.stack_name }}"
 s3_bucket = "{{ cookiecutter.s3_bucket }}"
 s3_prefix = "{{ cookiecutter.s3_prefix }}"
 region = "{{ cookiecutter.region }}"
+
 confirm_changeset = true
-capabilities = "CAPABILITY_IAM"
+capabilities = "CAPABILITY_NAMED_IAM"
 image_repositories = []
+
+parameter_overrides = [
+    "GitHubRoleNameParameter={{ cookiecutter.github_role_name }}"
+    "GitHubRepositoryParameter={{ cookiecutter.github_repository }}"
+    "GitHubRolePolicyNameParameter={{ cookiecutter.github_role_policy_name }}"
+]

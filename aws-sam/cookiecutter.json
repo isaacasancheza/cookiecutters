@@ -1,8 +1,13 @@
 {
-    "stack_name": "stack_name",
-    "s3_bucket": "s3_bucket",
-    "s3_prefix": "s3_prefix",
+    "stack_name": "stack-name",
+    "s3_bucket": "aws-sam-stacks",
+    "s3_prefix": "s3-prefix",
     "region": "us-east-1",
-    "version": "0.0.1",
+    "version": "0.1",
+    "oidc_provider": "oidc-provider",
+    "github_role_name": "github-role-name",
+    "github_repository": "github-github-repository",
+    "github_role_policy_name": "github-role-policy_name",
+    "_copy_without_render": ".github/*",
     "_new_lines": "\r"
 }

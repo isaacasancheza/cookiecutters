@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  GitHubRoleNameParameter:
+    Type: String
+  GitHubRepositoryParameter:
+    Type: String
+  GitHubRolePolicyNameParameter:
+    Type: String
+
+Resources:
+  GitHubRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref GitHubRoleNameParameter
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - sts:AssumeRoleWithWebIdentity
+            Effect: Allow
+            Principal:
+              Federated: "{{ cookiecutter.oidc-provider }}"
+            Condition:
+              StringLike:
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
+                token.actions.githubusercontent.com:sub: !Sub repo:${GitHubRepositoryParameter}:*
+      Tags:
+        - Key: repository
+          Value: !Ref GitHubRepositoryParameter
+
+  GitHubRolePolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      Roles:
+        - !Ref GitHubRole
+      PolicyName: !Ref GitHubRolePolicyNameParameter
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action: "*"
+            Effect: Deny
+            Resource: "*"
