@@ -1,5 +1,5 @@
 {
-	"name": "AWS Python 3.8",
+	"name": "aws-sam",
 
 	"image": "ghcr.io/isaacsancheza/images:aws-python3.8",
 

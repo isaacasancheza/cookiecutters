@@ -1,7 +1,4 @@
 {
-    "stack_name": "stack-name",
-    "s3_bucket": "s3-bucket",
-    "s3_prefix": "s3-prefix",
-    "region": "us-east-1",
+    "__static_name": "underneath",
     "_new_lines": "\r"
 }
