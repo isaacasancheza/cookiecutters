@@ -3,8 +3,6 @@
 
 	"image": "ghcr.io/isaacsancheza/images:aws-python3.8",
 
-	"updateContentCommand": "pipenv install --system --dev --skip-lock",
-
 	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
 
 	"workspaceFolder": "/workspace",
@@ -14,10 +12,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-python.python",
-				"ms-python.vscode-pylance",
 				"kddejong.vscode-cfn-lint",
-				"AmazonWebServices.aws-toolkit-vscode"			
+				"AmazonWebServices.aws-toolkit-vscode"
 			]
 		}
 	}

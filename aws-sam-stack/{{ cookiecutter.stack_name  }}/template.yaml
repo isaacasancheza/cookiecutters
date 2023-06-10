@@ -3,9 +3,7 @@ AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 
 Resources:
-  Stack:
-    Type: AWS::Serverless::Application
+  Bucket:
+    Type: AWS::S3::Bucket
     DeletionPolicy: Delete
     UpdateReplacePolicy: Delete
-    Properties:
-      Location: ./stacks/

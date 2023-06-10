@@ -11,11 +11,11 @@ s3_prefix = "{{ cookiecutter.s3_prefix }}"
 region = "{{ cookiecutter.region }}"
 
 confirm_changeset = true
-capabilities = "CAPABILITY_NAMED_IAM"
+
+capabilities = [
+    "CAPABILITY_IAM",
+]    
+
 image_repositories = []
 
-parameter_overrides = [
-    "GitHubRoleNameParameter={{ cookiecutter.github_role_name }}"
-    "GitHubRepositoryParameter={{ cookiecutter.github_repository }}"
-    "GitHubRolePolicyNameParameter={{ cookiecutter.github_role_policy_name }}"
-]
+parameter_overrides = []

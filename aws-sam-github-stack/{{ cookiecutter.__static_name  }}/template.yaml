@@ -11,6 +11,8 @@ Parameters:
 Resources:
   GitHubRole:
     Type: AWS::IAM::Role
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
     Properties:
       RoleName: !Ref GitHubRoleNameParameter
       AssumeRolePolicyDocument:
@@ -31,6 +33,8 @@ Resources:
 
   GitHubRolePolicy:
     Type: AWS::IAM::Policy
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
     Properties:
       Roles:
         - !Ref GitHubRole

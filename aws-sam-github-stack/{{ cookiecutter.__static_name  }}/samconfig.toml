@@ -1,0 +1,9 @@
+capabilities = [
+    "CAPABILITY_NAMED_IAM",
+]
+
+parameter_overrides = [
+    "GitHubRoleNameParameter={{ cookiecutter.github_role_name }}",
+    "GitHubRepositoryParameter={{ cookiecutter.github_repository }}",
+    "GitHubRolePolicyNameParameter={{ cookiecutter.github_role_policy_name }}",
+]
