@@ -22,7 +22,7 @@ Resources:
               - sts:AssumeRoleWithWebIdentity
             Effect: Allow
             Principal:
-              Federated: "{{ cookiecutter.oidc-provider }}"
+              Federated: "{{ cookiecutter.oidc_provider }}"
             Condition:
               StringLike:
                 token.actions.githubusercontent.com:aud: sts.amazonaws.com
