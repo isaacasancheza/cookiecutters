@@ -5,6 +5,5 @@ capabilities = [
 parameter_overrides = [
     "GitHubRoleNameParameter={{ cookiecutter.github_role_name }}",
     "GitHubRepositoryParameter={{ cookiecutter.github_repository }}",
-    "GitHubOIDCProviderParameter={{ cookiecutter.github_oidc_provider }}",
     "GitHubRolePolicyNameParameter={{ cookiecutter.github_role_policy_name }}",
 ]
