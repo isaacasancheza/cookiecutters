@@ -1,4 +1,4 @@
-version = {{ cookiecutter.version }}
+version = 0.1
 
 [default] 
 
@@ -6,9 +6,9 @@ version = {{ cookiecutter.version }}
 
 [default.deploy.parameters]
 stack_name = "{{ cookiecutter.stack_name }}"
-s3_bucket = "{{ cookiecutter.s3_bucket }}"
-s3_prefix = "{{ cookiecutter.s3_prefix }}"
-region = "{{ cookiecutter.region }}"
+s3_bucket = "aws-sam-stacks"
+s3_prefix = "{{ cookiecutter.stack_name }}"
+region = "us-east-1"
 
 confirm_changeset = true
 

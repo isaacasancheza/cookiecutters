@@ -1,9 +1,5 @@
 {
     "stack_name": "stack-name",
-    "s3_bucket": "aws-sam-stacks",
-    "s3_prefix": "s3-prefix",
-    "region": "us-east-1",
-    "version": "0.1",
     "__static_name": "sam",
     "_new_lines": "\r"
 }

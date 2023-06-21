@@ -1,0 +1,131 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  FunctionPolicyNameParameter:
+    Type: String
+  FunctionsFolderPathParameter:
+    Type: String
+
+  BlockFunctionVersionArnOutputParameter:
+    Type: String
+  IndexFunctionVersionArnOutputParameter:
+    Type: String
+  HeadersFunctionVersionArnOutputParameter:
+    Type: String
+
+Resources:
+  BlockFunction:
+    Type: AWS::Serverless::Function
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      Role: !GetAtt  FunctionRole.Arn
+      Handler: lambda.handler
+      Runtime: python3.8
+      CodeUri: !Sub "${FunctionsFolderPathParameter}/block/src"
+      PackageType: 'Zip'
+      AutoPublishAlias: latest
+
+  IndexFunction:
+    Type: AWS::Serverless::Function
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      Role: !GetAtt  FunctionRole.Arn
+      Handler: lambda.handler
+      Runtime: python3.8
+      CodeUri: !Sub "${FunctionsFolderPathParameter}/index/src"
+      PackageType: 'Zip'
+      AutoPublishAlias: latest
+
+  HeadersFunction:
+    Type: AWS::Serverless::Function
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      Role: !GetAtt  FunctionRole.Arn
+      Handler: lambda.handler
+      Runtime: python3.8
+      CodeUri: !Sub "${FunctionsFolderPathParameter}/headers/src"
+      PackageType: 'Zip'
+      AutoPublishAlias: latest
+
+  FunctionRole:
+    Type: AWS::IAM::Role
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: 
+                - lambda.amazonaws.com
+                - edgelambda.amazonaws.com
+
+  FunctionPolicy:
+    Type: AWS::IAM::Policy
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      PolicyName: !Ref FunctionPolicyNameParameter
+      Roles:
+        - !Ref FunctionRole
+      PolicyDocument: 
+        Version: 2012-10-17
+        Statement:
+          - Action: logs:CreateLogGroup
+            Effect: Allow
+            Resource: !Sub "arn:${AWS::Partition}:logs:*:${AWS::AccountId}:*"
+            Condition:
+              StringEquals:
+                "aws:SourceAccount": !Sub "${AWS::AccountId}"
+              ForAnyValue:ArnLike:
+                "aws:SourceArn": 
+                  - !Sub 
+                    - "${FunctionArn}/*"
+                    - FunctionArn: !GetAtt BlockFunction.Arn
+                  - !Sub 
+                    - "${FunctionArn}/*"
+                    - FunctionArn: !GetAtt IndexFunction.Arn
+                  - !Sub
+                    - "${FunctionArn}/*"
+                    - FunctionArn: !GetAtt HeadersFunction.Arn
+          - Action:
+              - logs:PutLogEvents
+              - logs:CreateLogStream
+            Effect: Allow
+            Resource: !Sub "arn:${AWS::Partition}:logs:*:${AWS::AccountId}:log-group:*"
+            Condition:
+              StringEquals:
+                "aws:SourceAccount": !Sub "${AWS::AccountId}"
+              ForAnyValue:ArnLike:
+                "aws:SourceArn": 
+                  - !Sub 
+                    - "${FunctionArn}/*"
+                    - FunctionArn: !GetAtt BlockFunction.Arn
+                  - !Sub 
+                    - "${FunctionArn}/*"
+                    - FunctionArn: !GetAtt IndexFunction.Arn
+                  - !Sub
+                    - "${FunctionArn}/*"
+                    - FunctionArn: !GetAtt HeadersFunction.Arn
+
+Outputs:
+  BlockFunctionVersionArnOutput:
+    Value: !Ref BlockFunction.Version
+    Export:
+      Name: !Ref BlockFunctionVersionArnOutputParameter
+  IndexFunctionVersionArnOutput:
+    Value: !Ref IndexFunction.Version
+    Export:
+      Name: !Ref IndexFunctionVersionArnOutputParameter
+  HeadersFunctionVersionArnOutput:
+    Value: !Ref  HeadersFunction.Version
+    Export:
+      Name: !Ref HeadersFunctionVersionArnOutputParameter

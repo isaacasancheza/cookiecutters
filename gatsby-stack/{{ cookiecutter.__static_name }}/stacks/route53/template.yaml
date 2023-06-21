@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  RecordNameParameter:
+    Type: String
+  HostedZoneIdParameter:
+    Type: String
+  CloudFrontDomainNameOutputParameter:
+    Type: String
+
+Resources:
+  Record:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneIdParameter
+      Name: !Ref RecordNameParameter
+      Type: A
+      AliasTarget:
+        DNSName: 
+          Fn::ImportValue: !Ref CloudFrontDomainNameOutputParameter
+        HostedZoneId: Z2FDTNDATAQYW2
+        EvaluateTargetHealth: false

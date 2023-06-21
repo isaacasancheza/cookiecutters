@@ -1,0 +1,8 @@
+{
+    "stack_name": "stack-name",
+    "iam_oidc_provider_arn": "iam-oidc-provider-arn",
+    "iam_role_name": "iam-role-name",
+    "iam_role_policy_name": "iam-role-policy-name",
+    "github_repository": "github-repository",
+    "_new_lines": "\r"
+}

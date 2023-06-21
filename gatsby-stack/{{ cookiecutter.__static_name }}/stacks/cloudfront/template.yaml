@@ -1,0 +1,101 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  BucketNameParameter:
+    Type: String
+  RecordNameParameter:
+    Type: String
+  CachePolicyNameParameter:
+    Type: String
+  DefaultRootObjectParameter:
+    Type: String
+  AcmCertificateArnParameter:
+    Type: String
+  OriginAccessControlNameParameter:
+    Type: String
+
+  BlockFunctionVersionArnOutputParameter:
+    Type: String
+  IndexFunctionVersionArnOutputParameter:
+    Type: String
+  HeadersFunctionVersionArnOutputParameter:
+    Type: String
+
+  CloudFrontDomainNameOutputParameter:
+    Type: String
+  BucketRegionalDomainNameOutputParameter:
+    Type: String
+  
+Resources:
+  CDN:
+    Type: AWS::CloudFront::Distribution
+    Properties: 
+      DistributionConfig: 
+        Enabled: true
+        Aliases:
+          - !Ref RecordNameParameter
+        DefaultRootObject: !Ref DefaultRootObjectParameter
+        ViewerCertificate:
+          SslSupportMethod: sni-only
+          AcmCertificateArn: !Ref AcmCertificateArnParameter
+          MinimumProtocolVersion: TLSv1
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+          CachePolicyId: !GetAtt CachePolicy.Id
+          TargetOriginId: !Ref BucketNameParameter
+          ViewerProtocolPolicy: redirect-to-https
+          LambdaFunctionAssociations:
+            - EventType: viewer-request
+              LambdaFunctionARN: 
+                Fn::ImportValue: !Ref BlockFunctionVersionArnOutputParameter
+            - EventType: origin-request
+              LambdaFunctionARN: 
+                Fn::ImportValue: !Ref IndexFunctionVersionArnOutputParameter
+            - EventType: origin-response
+              LambdaFunctionARN: 
+                Fn::ImportValue: !Ref HeadersFunctionVersionArnOutputParameter
+        Origins:
+          - Id: !Ref BucketNameParameter
+            S3OriginConfig:
+              OriginAccessIdentity: ''
+            DomainName:
+              Fn::ImportValue: !Ref BucketRegionalDomainNameOutputParameter
+            OriginAccessControlId: !GetAtt OriginAccessControl.Id
+        CustomErrorResponses:
+        - ErrorCode: 403
+          ResponseCode: 404
+          ResponsePagePath: /404
+
+  CachePolicy:
+    Type: AWS::CloudFront::CachePolicy
+    Properties:
+      CachePolicyConfig:
+        DefaultTTL: 86400
+        MaxTTL: 31536000
+        MinTTL: 0
+        Name: !Ref CachePolicyNameParameter
+        ParametersInCacheKeyAndForwardedToOrigin:
+          CookiesConfig:
+            CookieBehavior: none
+          EnableAcceptEncodingGzip: false
+          HeadersConfig:
+            HeaderBehavior: none
+          QueryStringsConfig:
+            QueryStringBehavior: none
+
+  OriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Ref OriginAccessControlNameParameter
+        SigningProtocol: sigv4
+        SigningBehavior: always
+        OriginAccessControlOriginType: s3
+
+Outputs:
+  CloudFrontDomainNameOutput:
+    Value: !GetAtt CDN.DomainName
+    Export:
+      Name: !Ref CloudFrontDomainNameOutputParameter

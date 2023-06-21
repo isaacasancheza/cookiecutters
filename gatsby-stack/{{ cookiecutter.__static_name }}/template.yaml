@@ -1,0 +1,120 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  RoleNameParameter:
+    Type: String
+  PolicyNameParameter:
+    Type: String
+  RepositoryParameter:
+    Type: String
+  OIDCProviderArnParameter:
+    Type: String
+
+  BucketNameParameter:
+    Type: String
+  RecordNameParameter:
+    Type: String
+  HostedZoneIdParameter:
+    Type: String
+  CachePolicyNameParameter:
+    Type: String
+  DefaultRootObjectParameter:
+    Type: String
+  AcmCertificateArnParameter:
+    Type: String
+  OriginAccessControlNameParameter:
+    Type: String
+
+  FunctionPolicyNameParameter:
+    Type: String
+  FunctionsFolderPathParameter:
+    Type: String
+
+  BucketArnOutputParameter:
+    Type: String
+  CloudFrontDomainNameOutputParameter:
+    Type: String
+  BlockFunctionVersionArnOutputParameter:
+    Type: String
+  IndexFunctionVersionArnOutputParameter:
+    Type: String
+  HeadersFunctionVersionArnOutputParameter:
+    Type: String
+  BucketRegionalDomainNameOutputParameter:
+    Type: String
+
+Resources:
+  S3Stack:
+    Type: AWS::Serverless::Application
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      Location: ./stacks/s3/template.yaml
+      Parameters:
+        BucketNameParameter: !Ref BucketNameParameter
+        BucketArnOutputParameter: !Ref BucketArnOutputParameter
+        BucketRegionalDomainNameOutputParameter: !Ref BucketRegionalDomainNameOutputParameter
+
+  Route53Stack:
+    Type: AWS::Serverless::Application
+    DependsOn: CloudFrontStack
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      Location: ./stacks/route53/template.yaml
+      Parameters:
+        RecordNameParameter: !Ref RecordNameParameter
+        HostedZoneIdParameter: !Ref HostedZoneIdParameter
+        CloudFrontDomainNameOutputParameter: !Ref CloudFrontDomainNameOutputParameter
+
+  CloudFrontStack:
+    Type: AWS::Serverless::Application
+    DependsOn:
+      - S3Stack
+      - LambdaStack
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      Location: ./stacks/cloudfront/template.yaml
+      Parameters:
+        BucketNameParameter: !Ref BucketNameParameter
+        RecordNameParameter: !Ref RecordNameParameter
+        CachePolicyNameParameter: !Ref CachePolicyNameParameter
+        DefaultRootObjectParameter: !Ref DefaultRootObjectParameter
+        AcmCertificateArnParameter: !Ref AcmCertificateArnParameter
+        OriginAccessControlNameParameter: !Ref OriginAccessControlNameParameter
+        
+        CloudFrontDomainNameOutputParameter: !Ref CloudFrontDomainNameOutputParameter 
+        BlockFunctionVersionArnOutputParameter: !Ref BlockFunctionVersionArnOutputParameter
+        IndexFunctionVersionArnOutputParameter: !Ref IndexFunctionVersionArnOutputParameter
+        HeadersFunctionVersionArnOutputParameter: !Ref HeadersFunctionVersionArnOutputParameter
+        BucketRegionalDomainNameOutputParameter: !Ref BucketRegionalDomainNameOutputParameter
+
+  LambdaStack:
+    Type: AWS::Serverless::Application
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      Location: ./stacks/lambda/template.yaml 
+      Parameters:
+        FunctionPolicyNameParameter: !Ref FunctionPolicyNameParameter
+        FunctionsFolderPathParameter: !Ref FunctionsFolderPathParameter
+        BlockFunctionVersionArnOutputParameter: !Ref BlockFunctionVersionArnOutputParameter
+        IndexFunctionVersionArnOutputParameter: !Ref IndexFunctionVersionArnOutputParameter
+        HeadersFunctionVersionArnOutputParameter: !Ref HeadersFunctionVersionArnOutputParameter
+
+  IAMStack:
+    Type: AWS::Serverless::Application
+    DependsOn: S3Stack
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      Location: ./stacks/iam/template.yaml
+      Parameters:
+        RoleNameParameter: !Ref RoleNameParameter
+        PolicyNameParameter: !Ref PolicyNameParameter
+        RepositoryParameter: !Ref RepositoryParameter
+        OIDCProviderArnParameter: !Ref OIDCProviderArnParameter
+        BucketArnOutputParameter: !Ref BucketArnOutputParameter

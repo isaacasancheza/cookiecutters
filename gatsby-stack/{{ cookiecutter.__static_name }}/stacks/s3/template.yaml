@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  BucketNameParameter:
+    Type: String
+  BucketArnOutputParameter:
+    Type: String
+  BucketRegionalDomainNameOutputParameter:
+    Type: String
+
+Resources:
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketNameParameter
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref Bucket
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - s3:GetObject
+            Effect: Allow
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Resource: !Sub "arn:${AWS::Partition}:s3:::${BucketNameParameter}/*"
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+
+Outputs:
+  BucketArnOutput:
+    Value: !GetAtt Bucket.Arn
+    Export:
+      Name: !Ref BucketArnOutputParameter
+  BucketRegionalDomainNameOutput:
+    Value: !GetAtt Bucket.RegionalDomainName
+    Export:
+      Name: !Ref BucketRegionalDomainNameOutputParameter

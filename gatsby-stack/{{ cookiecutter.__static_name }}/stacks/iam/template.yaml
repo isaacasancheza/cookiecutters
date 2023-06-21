@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  RoleNameParameter:
+    Type: String
+  PolicyNameParameter:
+    Type: String
+  RepositoryParameter:
+    Type: String
+  OIDCProviderArnParameter:
+    Type: String
+  BucketArnOutputParameter:
+    Type: String
+
+Resources:
+  Role:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref RoleNameParameter
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - sts:AssumeRoleWithWebIdentity
+            Effect: Allow
+            Principal:
+              Federated: !Sub "${OIDCProviderArnParameter}"
+            Condition:
+              StringLike:
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
+                token.actions.githubusercontent.com:sub: !Sub repo:${RepositoryParameter}:*
+      Tags:
+        - Key: repository
+          Value: !Ref RepositoryParameter
+
+  Policy:
+    Type: AWS::IAM::Policy
+    Properties:
+      Roles:
+        - !Ref Role
+      PolicyName: !Ref PolicyNameParameter
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - s3:GetObject
+              - s3:PutObject
+              - s3:DeleteObject
+              - s3:GetBucketLocation
+            Effect: Allow
+            Resource:
+              Fn::Join: 
+                - ""
+                - - Fn::ImportValue: !Ref BucketArnOutputParameter
+                  - "/*"
+          - Action:
+              - s3:ListBucket
+            Effect: Allow
+            Resource:
+              Fn::ImportValue: !Ref BucketArnOutputParameter

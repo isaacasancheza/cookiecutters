@@ -7,6 +7,8 @@ Parameters:
     Type: String
   GitHubRolePolicyNameParameter:
     Type: String
+  GitHubOIDCProviderArnParameter:
+    Type: String
 
 Resources:
   GitHubRole:
@@ -22,7 +24,7 @@ Resources:
               - sts:AssumeRoleWithWebIdentity
             Effect: Allow
             Principal:
-              Federated: "{{ cookiecutter.oidc_provider }}"
+              Federated: !Sub "${GitHubOIDCProviderArnParameter}"
             Condition:
               StringLike:
                 token.actions.githubusercontent.com:aud: sts.amazonaws.com
