@@ -5,8 +5,6 @@ Transform: AWS::Serverless-2016-10-31
 Parameters:
   FunctionPolicyNameParameter:
     Type: String
-  FunctionsFolderPathParameter:
-    Type: String
 
   BlockFunctionVersionArnOutputParameter:
     Type: String
@@ -24,7 +22,7 @@ Resources:
       Role: !GetAtt  FunctionRole.Arn
       Handler: lambda.handler
       Runtime: python3.8
-      CodeUri: !Sub "${FunctionsFolderPathParameter}/block/src"
+      CodeUri: {{ cookiecutter.functions_folder_path }}/block/src
       PackageType: 'Zip'
       AutoPublishAlias: latest
 
@@ -36,7 +34,7 @@ Resources:
       Role: !GetAtt  FunctionRole.Arn
       Handler: lambda.handler
       Runtime: python3.8
-      CodeUri: !Sub "${FunctionsFolderPathParameter}/index/src"
+      CodeUri: {{ cookiecutter.functions_folder_path }}/index/src
       PackageType: 'Zip'
       AutoPublishAlias: latest
 
@@ -48,7 +46,7 @@ Resources:
       Role: !GetAtt  FunctionRole.Arn
       Handler: lambda.handler
       Runtime: python3.8
-      CodeUri: !Sub "${FunctionsFolderPathParameter}/headers/src"
+      CodeUri: {{ cookiecutter.functions_folder_path }}/headers/src
       PackageType: 'Zip'
       AutoPublishAlias: latest
 

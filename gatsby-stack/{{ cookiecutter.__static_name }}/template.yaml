@@ -29,8 +29,6 @@ Parameters:
 
   FunctionPolicyNameParameter:
     Type: String
-  FunctionsFolderPathParameter:
-    Type: String
 
   BucketArnOutputParameter:
     Type: String
@@ -100,7 +98,6 @@ Resources:
       Location: ./stacks/lambda/template.yaml 
       Parameters:
         FunctionPolicyNameParameter: !Ref FunctionPolicyNameParameter
-        FunctionsFolderPathParameter: !Ref FunctionsFolderPathParameter
         BlockFunctionVersionArnOutputParameter: !Ref BlockFunctionVersionArnOutputParameter
         IndexFunctionVersionArnOutputParameter: !Ref IndexFunctionVersionArnOutputParameter
         HeadersFunctionVersionArnOutputParameter: !Ref HeadersFunctionVersionArnOutputParameter
