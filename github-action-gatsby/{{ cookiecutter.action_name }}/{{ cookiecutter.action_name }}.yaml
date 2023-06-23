@@ -5,7 +5,11 @@ on:
     paths:
       - {{ cookiecutter.gatsby_directory }}/**
   workflow_dispatch:
-
+{% raw %}
+concurrency:
+  group:  ${{ github.ref }}
+  cancel-in-progress: true
+{% endraw %}
 env:
   AWS_REGION: us-east-1
   AWS_ROLE_ARN: {{ cookiecutter.iam_role_arn }}
