@@ -9,7 +9,7 @@ class LambdaFunction(Construct):
 
         function_kwargs = {
             'code': lambda_.Code.from_asset(source_code_path, bundling=cdk.BundlingOptions(
-                image=lambda_.Runtime.PYTHON_3_9.bundling_image, 
+                image=lambda_.Runtime.PYTHON_3_10.bundling_image, 
                 command=['bash', '-c', 'pip install -r requirements.txt -t /asset-output && cp -au . /asset-output',
             ])),
             'handler': 'lambda.handler',
