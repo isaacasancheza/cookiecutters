@@ -1,7 +1,7 @@
 {
-	"name": "aws-sam",
+	"name": "aws-cdk",
 
-	"image": "ghcr.io/isaacsancheza/images:aws-python3.8",
+	"image": "ghcr.io/isaacsancheza/images:aws-cdk",
 
 	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
 
@@ -12,8 +12,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"kddejong.vscode-cfn-lint",
-				"AmazonWebServices.aws-toolkit-vscode"
+				"ms-python.python",
+				"ms-python.vscode-pylance"
 			]
 		}
 	}
