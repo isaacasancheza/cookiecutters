@@ -1,19 +1,6 @@
 {
     "app": "python3 app.py",
-    "watch": {
-        "include": [
-            "**"
-        ],
-        "exclude": [
-            "tests",
-            "Pipfile*",
-            "README.md",
-            "cdk*.json",
-            "**/__pycache__",
-            "**/__init__.py",
-            "requirements*.txt"
-        ]
-    },
+    "outputsFile": "./outputs.json",
     "context": {
         "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
         "@aws-cdk/core:checkSecretUsage": true,
