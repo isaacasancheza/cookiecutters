@@ -20,6 +20,6 @@ class LambdaFunction(Construct):
         self.function: lambda_.Function = lambda_.Function(self, construct_id, **function_kwargs)
 
 
-class {{ cookiecutter.stack_name.split('_') | map('capitalize') | join('') }}(cdk.Stack):
+class {{ cookiecutter.stack_name.split('_') | map('capitalize') | join('') }}Stack(cdk.NestedStack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
