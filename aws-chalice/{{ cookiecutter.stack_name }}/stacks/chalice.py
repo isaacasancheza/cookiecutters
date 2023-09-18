@@ -8,7 +8,9 @@ class ChaliceStack(cdk.NestedStack):
         super().__init__(scope, construct_id)
         
         self.app: Chalice = Chalice(
-            self, 'App', source_dir=source_dir,
+            self, 
+            'App', 
+            source_dir=source_dir,
             stage_config={
                 'environment_variables': {
                 },
