@@ -8,4 +8,4 @@ class RootStack(cdk.Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        self.chalice_stack: ChaliceStack = ChaliceStack(self, 'ChaliceStack')
+        chalice_stack: ChaliceStack = ChaliceStack(self, 'ChaliceStack')
