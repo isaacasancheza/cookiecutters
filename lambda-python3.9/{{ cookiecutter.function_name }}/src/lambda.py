@@ -1,2 +1,2 @@
-def handler(event, _):
+def handler(event, context):
     pass
