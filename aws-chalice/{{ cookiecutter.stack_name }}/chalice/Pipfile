@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 boto3 = "*"
+chalice = "*"
 pydantic = "*"
 aws-error-utils = "*"
 pydantic_settings = "*"
