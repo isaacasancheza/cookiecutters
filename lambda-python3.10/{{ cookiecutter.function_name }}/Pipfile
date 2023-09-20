@@ -7,6 +7,7 @@ name = "pypi"
 boto3 = "*"
 pydantic = "*"
 aws-error-utils = "*"
+pydantic_settings = "*"
 aws-lambda-powertools = "*"
 
 [dev-packages]
