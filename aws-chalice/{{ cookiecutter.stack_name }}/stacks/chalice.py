@@ -7,7 +7,7 @@ class ChaliceStack(cdk.NestedStack):
     def __init__(self, scope: Construct, construct_id: str, source_dir: str = '/workspace/chalice') -> None:
         super().__init__(scope, construct_id)
         
-        Chalice(
+        self.app: Chalice = Chalice(
             self, 
             'App', 
             source_dir=source_dir,
