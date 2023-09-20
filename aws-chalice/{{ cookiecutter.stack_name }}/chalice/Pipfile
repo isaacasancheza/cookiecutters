@@ -7,12 +7,13 @@ name = "pypi"
 boto3 = "*"
 pydantic = "*"
 aws-error-utils = "*"
+pydantic_settings = "*"
 aws-lambda-powertools = "*"
 
 [dev-packages]
-autopep8 = "*"
-pytest = "*"
 mypy = "*"
+pytest = "*"
+autopep8 = "*"
 
 [requires]
-python_version = "3.10"
+python_version = "3.11"
