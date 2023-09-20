@@ -11,9 +11,9 @@ pydantic_settings = "*"
 aws-lambda-powertools = "*"
 
 [dev-packages]
-autopep8 = "*"
-pytest = "*"
 mypy = "*"
+pytest = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3.11"
