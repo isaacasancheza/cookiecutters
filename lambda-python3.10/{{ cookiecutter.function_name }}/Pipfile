@@ -14,6 +14,7 @@ aws-lambda-powertools = "*"
 mypy = "*"
 pytest = "*"
 autopep8 = "*"
+boto3-stubs = {extras = ["boto3"], version = "*"}
 
 [requires]
 python_version = "3.10"
