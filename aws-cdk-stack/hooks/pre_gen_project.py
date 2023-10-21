@@ -2,7 +2,7 @@ from os.path import exists
 
 
 files = [
-    '{{ cookiecutter.stack_name }}.py',
+    '{{ cookiecutter.nested_stack_name }}.py',
 ]
 
 for filename in files:

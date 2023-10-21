@@ -3,9 +3,9 @@ from pathlib import Path
 
 
 files = [
-    '{{ cookiecutter.stack_name}}.py',
+    '{{ cookiecutter.nested_stack_name}}.py',
 ]
-folder = '{{ cookiecutter.stack_name }}'
+folder = '{{ cookiecutter.nested_stack_name }}'
 
 chdir('..')
 path = Path(folder)
