@@ -1,4 +1,6 @@
 {
+    "region": "region",
+    "account": "account",
     "stack_name": "stack-name",
     "_new_lines": "\r"
 }

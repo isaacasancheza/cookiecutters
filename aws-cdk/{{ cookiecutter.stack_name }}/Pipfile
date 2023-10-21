@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[scripts]
+synth = "cdk synth"
+deploy = "cdk deploy"
+destroy = "cdk destroy"
+
+[packages]
+
+[dev-packages]
+mypy = "*"
+pytest = "*"
+autopep8 = "*"
+aws-cdk-lib = "*"
+
+[requires]
+python_version = "3.11"

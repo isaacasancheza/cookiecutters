@@ -3,8 +3,10 @@ from os.path import exists
 
 files = [
     'app.py',
-    'stacks',
+    'Pipfile',
+    'stack.py',
     'cdk.json',
+    'nested_stacks',
 ]
 
 for filename in files:
