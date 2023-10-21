@@ -12,8 +12,8 @@ class LambdaLayer(Construct):
             construct_id,
             code=lambda_.Code.from_asset(source_code_path, bundling=cdk.BundlingOptions(
                 image=lambda_.Runtime.PYTHON_3_11.bundling_image, 
-                command=['bash', '-c', 'pip install -r requirements.txt -t /asset-output/python',
-            ])),
+                command=['bash', '-c', 'pip install -r requirements.txt -t /asset-output/python'],
+            )),
             removal_policy=cdk.RemovalPolicy.DESTROY,
             compatible_runtimes=[
                 lambda_.Runtime.PYTHON_3_11,
