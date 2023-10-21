@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 boto3 = "*"
 pydantic = "*"
+boto3-stubs = {extras = ["boto3"], version = "*"}
 aws-error-utils = "*"
 pydantic_settings = "*"
 aws-lambda-powertools = "*"
@@ -14,7 +15,6 @@ aws-lambda-powertools = "*"
 mypy = "*"
 pytest = "*"
 autopep8 = "*"
-boto3-stubs = {extras = ["boto3"], version = "*"}
 
 [requires]
 python_version = "3.11"
