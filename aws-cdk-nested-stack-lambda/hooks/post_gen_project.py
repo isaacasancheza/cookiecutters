@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 files = [
-    '{{ cookiecutter.nested_stack_name}}.py',
+    '{{ cookiecutter.nested_stack_name }}.py',
 ]
 folder = '{{ cookiecutter.nested_stack_name }}'
 
