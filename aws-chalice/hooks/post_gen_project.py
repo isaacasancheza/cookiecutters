@@ -4,9 +4,11 @@ from pathlib import Path
 
 files = [
     'app.py',
-    'stacks',
     'chalice',
+    'Pipfile',
+    'stack.py',
     'cdk.json',
+    'nested_stacks',
 ]
 folder = '{{ cookiecutter.stack_name }}'
 

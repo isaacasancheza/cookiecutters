@@ -1,5 +1,7 @@
 {
-    "stack_name": "stack-name",
+    "region": "region",
+    "account": "account",
     "app_name": "app-name",
+    "stack_name": "stack-name",
     "_new_lines": "\r"
 }

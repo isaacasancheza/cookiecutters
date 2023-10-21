@@ -3,18 +3,20 @@ url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[scripts]
+synth = "cdk synth"
+deploy = "cdk deploy"
+destroy = "cdk destroy"
+
 [packages]
-boto3 = "*"
 chalice = "*"
-pydantic = "*"
-aws-error-utils = "*"
-pydantic_settings = "*"
-aws-lambda-powertools = "*"
 
 [dev-packages]
 mypy = "*"
 pytest = "*"
+chalice = {extras = ["cdkv2"]}
 autopep8 = "*"
+aws-cdk-lib = "*"
 
 [requires]
 python_version = "3.11"
