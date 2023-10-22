@@ -4,15 +4,20 @@ from constructs import Construct
 
 
 class LambdaLayer(Construct):
-    def __init__(self, scope: Construct, construct_id: str, /, *, source_code_path: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, /, *, is_package: bool = False, source_code_path: str, **kwargs) -> None:
         super().__init__(scope, construct_id)
+
+        if is_package:
+            command = ['bash', '-c', 'pip install . -t /asset-output/python']
+        else:
+            command = ['bash', '-c', 'pip install -r requirements.txt -t /asset-output/python']
 
         self.layer: lambda_.LayerVersion = lambda_.LayerVersion(
             self,
             construct_id,
             code=lambda_.Code.from_asset(source_code_path, bundling=cdk.BundlingOptions(
                 image=lambda_.Runtime.PYTHON_3_11.bundling_image, 
-                command=['bash', '-c', 'pip install -r requirements.txt -t /asset-output/python'],
+                command=command,
             )),
             removal_policy=cdk.RemovalPolicy.DESTROY,
             compatible_runtimes=[
