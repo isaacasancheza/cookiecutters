@@ -3,7 +3,6 @@ from os.path import exists
 
 files = [
     'app.py',
-    'Pipfile',
     'stack.py',
     'cdk.json',
     'nested_stacks',

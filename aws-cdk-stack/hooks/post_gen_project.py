@@ -4,7 +4,6 @@ from pathlib import Path
 
 files = [
     'app.py',
-    'Pipfile',
     'stack.py',
     'cdk.json',
     'nested_stacks',
