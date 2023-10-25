@@ -11,4 +11,5 @@ class Stack(cdk.Stack):
         chalice_stack: ChaliceNestedStack = ChaliceNestedStack(
             self,
             'ChaliceNestedStack',
+            stage_config={},
         )    
