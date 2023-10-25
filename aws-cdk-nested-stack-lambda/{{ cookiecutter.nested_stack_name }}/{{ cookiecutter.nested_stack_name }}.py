@@ -12,7 +12,7 @@ class LambdaLayer(Construct):
         else:
             command = ['bash', '-c', 'pip install -r requirements.txt -t /asset-output/python']
 
-        self.layer: lambda_.LayerVersion = lambda_.LayerVersion(
+        self.layer = lambda_.LayerVersion(
             self,
             construct_id,
             code=lambda_.Code.from_asset(source_code_path, bundling=cdk.BundlingOptions(
@@ -34,7 +34,7 @@ class LambdaFunction(Construct):
     def __init__(self, scope: Construct, construct_id: str, /, *, source_code_path: str, timeout: int = 60, **kwargs) -> None:
         super().__init__(scope, construct_id)
 
-        self.function: lambda_.Function = lambda_.Function(
+        self.function = lambda_.Function(
             self, 
             construct_id, 
             code=lambda_.Code.from_asset(source_code_path, bundling=cdk.BundlingOptions(
