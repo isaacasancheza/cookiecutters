@@ -5,11 +5,10 @@ name = "pypi"
 
 [packages]
 boto3 = "*"
-pydantic = "*"
+pydantic = ">=2.0.3"
 boto3-stubs = {extras = ["boto3"], version = "*"}
 aws-error-utils = "*"
-pydantic_settings = "*"
-aws-lambda-powertools = "*"
+aws-lambda-powertools = {extras = ["parser"], version = "*"}
 
 [dev-packages]
 mypy = "*"
@@ -19,4 +18,3 @@ aws-cdk-lib = "*"
 
 [requires]
 python_version = "3.11"
-
