@@ -4,7 +4,16 @@ from constructs import Construct
 
 
 class LambdaLayer(Construct):
-    def __init__(self, scope: Construct, construct_id: str, /, *, is_package: bool = False, source_code_path: str, **kwargs) -> None:
+    def __init__(
+            self, 
+            scope: Construct, 
+            construct_id: str, 
+            /, 
+            *, 
+            is_package: bool = False, 
+            source_code_path: str, 
+            **kwargs,
+        ) -> None:
         super().__init__(scope, construct_id)
 
         if is_package:
@@ -31,7 +40,16 @@ class LambdaLayer(Construct):
 
 
 class LambdaFunction(Construct):
-    def __init__(self, scope: Construct, construct_id: str, /, *, source_code_path: str, timeout: int = 60, **kwargs) -> None:
+    def __init__(
+            self, 
+            scope: Construct, 
+            construct_id: str,
+            /, 
+            *, 
+            source_code_path: str, 
+            timeout: int = 60, 
+            **kwargs,
+        ) -> None:
         super().__init__(scope, construct_id)
 
         self.function = lambda_.Function(
