@@ -7,6 +7,7 @@ class Stack(cdk.Stack):
             self, 
             scope: Construct, 
             construct_id: str, 
-            **kwargs
+            /,
+            **kwargs,
         ) -> None:
         super().__init__(scope, construct_id, **kwargs)
