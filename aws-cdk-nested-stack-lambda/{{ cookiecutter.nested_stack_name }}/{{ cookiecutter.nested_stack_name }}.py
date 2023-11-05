@@ -25,9 +25,6 @@ class LambdaLayer(Construct):
             compatible_runtimes=[
                 lambda_.Runtime.PYTHON_3_11,
             ],
-            compatible_architectures=[
-                lambda_.Architecture.X86_64,
-            ],
             **kwargs,
         )
 
