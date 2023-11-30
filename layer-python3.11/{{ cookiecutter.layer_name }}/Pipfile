@@ -5,15 +5,15 @@ name = "pypi"
 
 [packages]
 boto3 = "*"
-pydantic = ">=2.0.3"
+pydantic = "*"
 boto3-stubs = {extras = ["boto3"], version = "*"}
-aws-error-utils = "*"
-aws-lambda-powertools = {extras = ["parser"], version = "*"}
+aws-lambda-powertools = "*"
 
 [dev-packages]
 mypy = "*"
 pytest = "*"
 autopep8 = "*"
+coverage = "*"
 aws-cdk-lib = "*"
 
 [requires]
