@@ -1,5 +1,6 @@
 {
     "region": "region",
     "account": "account",
-    "stack_name": "stack-name"
+    "stack_name": "stack-name",
+    "__folder_name": "cdk"
 }
