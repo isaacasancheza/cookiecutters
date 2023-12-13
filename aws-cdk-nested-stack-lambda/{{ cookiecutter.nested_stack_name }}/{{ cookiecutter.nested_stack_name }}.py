@@ -10,7 +10,6 @@ class LambdaLayer(Construct):
             construct_id: str, 
             /, 
             *, 
-            handler: str = 'lambda_.handler',
             source_code_path: str, 
             **kwargs,
         ) -> None:
@@ -37,6 +36,7 @@ class LambdaFunction(Construct):
             construct_id: str,
             /, 
             *, 
+            handler: str = 'lambda_.handler',
             source_code_path: str, 
             **kwargs,
         ) -> None:
@@ -49,7 +49,7 @@ class LambdaFunction(Construct):
                 image=lambda_.Runtime.PYTHON_3_11.bundling_image, 
                 command=['bash', '-c', 'rsync -r . /asset-output'],
             )),
-            handler='lambda.handler',
+            handler=handler,
             runtime=lambda_.Runtime.PYTHON_3_11,
             **kwargs,
         )
