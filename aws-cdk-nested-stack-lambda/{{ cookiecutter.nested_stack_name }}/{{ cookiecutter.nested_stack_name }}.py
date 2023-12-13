@@ -10,6 +10,7 @@ class LambdaLayer(Construct):
             construct_id: str, 
             /, 
             *, 
+            handler: str = 'lambda_.handler',
             source_code_path: str, 
             **kwargs,
         ) -> None:
