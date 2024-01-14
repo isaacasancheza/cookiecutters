@@ -19,7 +19,7 @@ class LambdaLayer(Construct):
             self,
             construct_id,
             code=lambda_.Code.from_asset(source_code_path, bundling=cdk.BundlingOptions(
-                image=lambda_.Runtime.PYTHON_3_11.bundling_image, 
+                image=lambda_.Runtime.PYTHON_3_12.bundling_image, 
                 command=['bash', '-c', 'pip install -r requirements.txt -t /asset-output/python'],
             )),
             compatible_runtimes=[
@@ -46,11 +46,11 @@ class LambdaFunction(Construct):
             self, 
             construct_id, 
             code=lambda_.Code.from_asset(source_code_path, bundling=cdk.BundlingOptions(
-                image=lambda_.Runtime.PYTHON_3_11.bundling_image, 
+                image=lambda_.Runtime.PYTHON_3_12.bundling_image, 
                 command=['bash', '-c', 'rsync -r . /asset-output'],
             )),
-            handler=handler,
-            runtime=lambda_.Runtime.PYTHON_3_11,
+            handler='lambda.handler',
+            runtime=lambda_.Runtime.PYTHON_3_12,
             **kwargs,
         )
 
