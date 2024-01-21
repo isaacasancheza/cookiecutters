@@ -9,12 +9,12 @@ stack_name = '{{ cookiecutter.stack_name }}'
 
 app = cdk.App()
 env = cdk.Environment(region=region, account=account)
-
-Stack(
+stack = Stack(
     app, 
     'Stack',
     env=env, 
     stack_name=stack_name, 
 )
 
+cdk.Tags.of(stack).add('stack-name', stack_name)
 app.synth()
