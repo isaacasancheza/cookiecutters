@@ -10,6 +10,7 @@ name = "pypi"
 mypy = "*"
 pytest = "*"
 autopep8 = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.12"
