@@ -1,0 +1,7 @@
+{
+    "region": "region",
+    "account": "account",
+    "stack_name": "stack-name",
+    "project_name": "project-name",
+    "image_repository": "image_repository"
+}
