@@ -4,9 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+app = {file = ".", editable = true}
 boto3 = "*"
 pydantic = "*"
-annotated-types = "*"
 aws-lambda-powertools = "*"
 
 [dev-packages]
