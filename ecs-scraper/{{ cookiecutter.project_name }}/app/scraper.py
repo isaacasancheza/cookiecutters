@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
-import logging
-
+from aws_lambda_powertools import Logger
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.common.by import By
 
-
-logging.basicConfig()
-logger = logging.getLogger('scraper')
-logger.setLevel(logging.INFO)
+logger = Logger()
 
 
 def scrap():
