@@ -18,12 +18,21 @@ class LambdaLayer(Construct):
         self.layer = lambda_.LayerVersion(
             self,
             construct_id,
-            code=lambda_.Code.from_asset(source_code_path, bundling=cdk.BundlingOptions(
-                image=lambda_.Runtime.PYTHON_3_12.bundling_image, 
-                command=['bash', '-c', 'pip install -r requirements.txt -t /asset-output/python'],
-            )),
+            code=lambda_.Code.from_asset(
+                source_code_path, 
+                bundling=cdk.BundlingOptions(
+                    image=lambda_.Runtime.PYTHON_3_12.bundling_image, 
+                    command=[
+                        'bash', 
+                        '-c', 
+                        'pip install -r requirements.txt -t /asset-output/python',
+                        '&&',
+                        'rsync -r . /asset-output',
+                    ],
+                ),
+            ),
             compatible_runtimes=[
-                lambda_.Runtime.PYTHON_3_11,
+                lambda_.Runtime.PYTHON_3_12,
             ],
             **kwargs,
         )
@@ -45,11 +54,18 @@ class LambdaFunction(Construct):
         self.function = lambda_.Function(
             self, 
             construct_id, 
-            code=lambda_.Code.from_asset(source_code_path, bundling=cdk.BundlingOptions(
-                image=lambda_.Runtime.PYTHON_3_12.bundling_image, 
-                command=['bash', '-c', 'rsync -r . /asset-output'],
-            )),
-            handler='lambda.handler',
+            code=lambda_.Code.from_asset(
+                source_code_path, 
+                bundling=cdk.BundlingOptions(
+                    image=lambda_.Runtime.PYTHON_3_12.bundling_image, 
+                    command=[
+                        'bash', 
+                        '-c', 
+                        'rsync -r . /asset-output',
+                    ],
+                ),
+            ),
+            handler=handler,
             runtime=lambda_.Runtime.PYTHON_3_12,
             **kwargs,
         )
