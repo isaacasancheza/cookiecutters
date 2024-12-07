@@ -3,10 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "{{ cookiecutter.package_name }}"
-version = "0.0.1"
-requires-python = ">=3.12"
-dependencies = []
+name = "app"
+version = "0.0.0"
+requires-python = ">={{ cookiecutter.python_version }}"
 
 [tool.pytest.ini_options]
 addopts = [
