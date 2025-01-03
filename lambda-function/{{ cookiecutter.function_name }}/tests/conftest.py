@@ -1,14 +1,17 @@
-from aws_lambda_powertools.utilities.typing import LambdaContext as _LambdaContext
+from dataclasses import dataclass
+
 from pytest import fixture
 
 
-class LambdaContext(_LambdaContext):
-    _function_name = 'test'
-    _memory_limit_in_mb = 128
-    _invoked_function_arn = 'arn:aws:lambda:us-east-1:123456789012:function:test'
-    _aws_request_id = 'da658bd3-2d6f-4e7b-8ec2-937234644fdc'
-
-
 @fixture
-def lambda_context() -> LambdaContext:
+def lambda_context():
+    @dataclass
+    class LambdaContext:
+        function_name: str = 'test'
+        memory_limit_in_mb: int = 128
+        invoked_function_arn: str = (
+            'arn:aws:lambda:eu-west-1:123456789012:function:test'
+        )
+        aws_request_id: str = 'da658bd3-2d6f-4e7b-8ec2-937234644fdc'
+
     return LambdaContext()

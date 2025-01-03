@@ -1,8 +1,8 @@
-import lambda_
+from lambda_ import handler
 
 
 def test_handler(
     lambda_context,
 ):
     event = {}
-    assert lambda_.handler(event, lambda_context) is None
+    assert handler(event, lambda_context) is None
