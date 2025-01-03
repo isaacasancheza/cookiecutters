@@ -1,5 +1,7 @@
 {
     "directory": "backend",
-    "stack_name": "stack-name",
+    "project_name": "project-name",
+    "data_stack_name": "{{ cookiecutter.project_name }}-data",
+    "compute_stack_name": "{{ cookiecutter.project_name }}-compute",
     "python_version": 3.13
 }
