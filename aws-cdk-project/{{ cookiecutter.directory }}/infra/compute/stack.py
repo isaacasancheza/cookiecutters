@@ -26,6 +26,7 @@ class Stack(cdk.Stack):
             'Data',
             project_name=project_name,
         )
+
         layers = Layers(
             self,
             'Layers',
