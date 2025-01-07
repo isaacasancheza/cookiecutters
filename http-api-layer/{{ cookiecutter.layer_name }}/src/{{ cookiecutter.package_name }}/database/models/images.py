@@ -11,11 +11,9 @@ class Image(BaseModel, ABC):
     sk: types.ImageSk = Field(
         default_factory=lambda: utils.generate_sk(constants.KeyPrefix.IMAGE)
     )
-
     width: int
     height: int
     format: str
-
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
     @property
