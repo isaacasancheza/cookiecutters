@@ -1,6 +1,7 @@
 import aws_cdk as cdk
 from constructs import Construct
 from stack_constructs import (
+    CDN,
     Authentication,
     Database,
     Storage,
@@ -24,11 +25,18 @@ class Stack(cdk.Stack):
             stack_name=stack_name,
         )
 
-        Storage(
+        storage = Storage(
             self,
             'Storage',
             project_name=project_name,
             removal_policy=removal_policy,
+        )
+
+        CDN(
+            self,
+            'CDN',
+            storage=storage,
+            project_name=project_name,
         )
 
         Database(

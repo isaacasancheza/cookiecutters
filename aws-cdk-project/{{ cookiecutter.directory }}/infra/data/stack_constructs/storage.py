@@ -45,6 +45,13 @@ class Storage(Construct):
         removal_policy: cdk.RemovalPolicy,
     ) -> None:
         super().__init__(scope, construct_id)
+        cdn = Bucket(
+            self,
+            'CDN',
+            name='cdn',
+            project_name=project_name,
+            removal_policy=removal_policy,
+        )
         main = Bucket(
             self,
             'Main',
@@ -52,7 +59,12 @@ class Storage(Construct):
             project_name=project_name,
             removal_policy=removal_policy,
         )
+        self._cdn = cdn
         self._main = main
+
+    @property
+    def cdn_bucket(self) -> s3.Bucket:
+        return self._cdn.bucket
 
     @property
     def main_bucket(self) -> s3.Bucket:
