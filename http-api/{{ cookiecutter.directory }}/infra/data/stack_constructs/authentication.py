@@ -19,23 +19,9 @@ class Authentication(Construct):
             self,
             'UserPool',
             removal_policy=removal_policy,
-            email=None,
-            auto_verify=None,
-            sign_in_aliases=cognito.SignInAliases(
-                username=True,
-            ),
-            account_recovery=None,
-            user_verification=None,
-            standard_attributes=None,
-            self_sign_up_enabled=True,
         )
         user_pool_client = user_pool.add_client(
             'UserPoolClient',
-            auth_flows=cognito.AuthFlow(
-                user_password=True,
-            ),
-            access_token_validity=cdk.Duration.days(1),
-            refresh_token_validity=cdk.Duration.days(30),
         )
         ssm.StringParameter(
             self,
