@@ -8,6 +8,7 @@ version = "0.0.0"
 requires-python = ">={{ cookiecutter.python_version }}"
 dependencies = [
     "aws-lambda-powertools",
+    "pydantic",
     "sentry-sdk",
 ]
 

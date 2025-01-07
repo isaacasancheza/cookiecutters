@@ -8,6 +8,7 @@ from constructs import Construct
 
 from stack_constructs.data import Data
 from stack_constructs.layers import Layers
+from stack_constructs.parameters import Parameters
 
 
 @jsii.implements(cdk.IAspect)
@@ -67,18 +68,45 @@ class Function(lambda_.Function):
             code=lambda_.Code.from_asset(
                 path=f'../../runtime/functions/{source_code_directory}',
                 bundling=cdk.BundlingOptions(
-                    image=lambda_.Runtime.PYTHON_3_13.bundling_image,
+                    image=lambda_.Runtime.PYTHON_{{ cookiecutter._runtime_python_version }}.bundling_image,
                     command=['bash', '-c', 'rsync -r lambda_.py /asset-output'],
                 ),
             ),
             handler='lambda_.handler',
             timeout=timeout,
             tracing=tracing,
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_{{ cookiecutter._runtime_python_version }},
             memory_size=memory_size,
             reserved_concurrent_executions=reserved_concurrent_executions,
             architecture=lambda_.Architecture.ARM_64,
         )
+
+
+class HttpApi(Construct):
+    def __init__(
+        self,
+        scope: Construct,
+        construct_id: str,
+        /,
+        *,
+        data: Data,
+    ) -> None:
+        super().__init__(scope, construct_id)
+        function = Function(
+            self,
+            'Function',
+            tracing=lambda_.Tracing.ACTIVE,
+            memory_size=512,
+            source_code_directory='http-api',
+        )
+
+        function.add_environment('POWERTOOLS_SERVICE_NAME', 'http-api')
+
+        data.storage.cdn_bucket.grant_write(function)
+        data.storage.main_bucket.grant_read_write(function)
+        data.database.main_table.grant_read_write_data(function)
+
+        self.function = function
 
 
 class Functions(Construct):
@@ -98,6 +126,14 @@ class Functions(Construct):
             scope,
             construct_id,
         )
+        
+        http_api = HttpApi(
+            self,
+            'HttpApi',
+            data=data,
+        )
+
+        self._http_api = http_api
 
         cdk.Aspects.of(self).add(
             cast(
@@ -110,3 +146,7 @@ class Functions(Construct):
                 ),
             )
         )
+    
+    @property
+    def http_api(self):
+        return self._http_api.function
