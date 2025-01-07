@@ -2,9 +2,11 @@ from os import environ
 
 from aws_lambda_powertools.utilities.parameters import get_parameters
 
-# metadata
 PROJECT_NAME = environ['PROJECT_NAME']
 PARAMETERS = get_parameters(f'/{PROJECT_NAME}', decrypt=True)
+
+# cdn
+CDN_DOMAIN_NAME = PARAMETERS['cdn/domain-name']
 
 # storage
 MAIN_BUCKET_NAME = PARAMETERS['storage/main-bucket/name']
