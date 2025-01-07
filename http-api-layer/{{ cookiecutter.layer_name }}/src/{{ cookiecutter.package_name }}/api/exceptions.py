@@ -38,6 +38,6 @@ class TooManyRequestsError(ServiceError):
         super().__init__(429, 'Too Many Requests')
 
 
-class UnsupportedMediaType(ServiceError):
+class UnsupportedMediaTypeError(ServiceError):
     def __init__(self):
         super().__init__(415, 'Unsupported Media Type')

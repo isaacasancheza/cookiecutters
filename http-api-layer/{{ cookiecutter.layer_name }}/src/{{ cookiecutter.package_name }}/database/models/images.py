@@ -2,10 +2,9 @@ from abc import ABC
 from datetime import datetime, timezone
 from typing import cast
 
-from pydantic import Field
-
 from app import constants, settings, types, utils
 from app.database.models.base import BaseModel
+from pydantic import Field
 
 
 class Image(BaseModel, ABC):
@@ -18,6 +17,10 @@ class Image(BaseModel, ABC):
     format: str
 
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+    @property
+    def metadata(self):
+        return {}
 
     @property
     def extension(self):

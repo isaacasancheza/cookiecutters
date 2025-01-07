@@ -1,6 +1,7 @@
 from os import environ
 
 from aws_lambda_powertools.utilities.parameters import get_parameters
+from filetype.types import image
 
 INF = 1_000_000
 DEV = bool(environ.get('POWERTOOLS_DEV'))
@@ -22,3 +23,9 @@ MAIN_TABLE_NAME = PARAMETERS['database/main-table/name']
 USER_POOL_ID = PARAMETERS['authentication/user-pool/id']
 USER_POOL_REGION = PARAMETERS['authentication/user-pool/region']
 USER_POOL_CLIENT_ID = PARAMETERS['authentication/user-pool-client/id']
+
+# images configuration
+IMAGE_ALLOWED_MIME_TYPES = [
+    image.Png.MIME,
+    image.Jpeg.MIME,
+]
