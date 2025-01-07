@@ -10,6 +10,7 @@ CDN_DOMAIN_NAME = PARAMETERS['cdn/domain-name']
 
 # storage
 MAIN_BUCKET_NAME = PARAMETERS['storage/main-bucket/name']
+CDN_BUCKET_NAME = PARAMETERS['storage/cdn-bucket/name']
 
 # database
 MAIN_TABLE_NAME = PARAMETERS['database/main-table/name']
