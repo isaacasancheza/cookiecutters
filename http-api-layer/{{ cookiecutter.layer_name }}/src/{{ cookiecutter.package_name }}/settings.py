@@ -19,6 +19,9 @@ CDN_BUCKET_NAME = PARAMETERS['storage/cdn-bucket/name']
 # database
 MAIN_TABLE_NAME = PARAMETERS['database/main-table/name']
 
+# http api
+CORS_ALLOW_ORIGIN = PARAMETERS['http-api/cors-allow-origin']
+
 # authentication
 USER_POOL_ID = PARAMETERS['authentication/user-pool/id']
 USER_POOL_REGION = PARAMETERS['authentication/user-pool/region']

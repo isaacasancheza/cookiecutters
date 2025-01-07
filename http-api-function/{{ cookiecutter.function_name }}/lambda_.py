@@ -14,13 +14,16 @@ from http import HTTPStatus
 from typing import Any
 
 from app import settings
-from app.api import exceptions, routers
+from app.api import exceptions
 from aws_lambda_powertools import Logger, Tracer
 from aws_lambda_powertools.event_handler import (
     APIGatewayHttpResolver,
     CORSConfig,
     Response,
     content_types,
+)
+from aws_lambda_powertools.event_handler.openapi.exceptions import (
+    RequestValidationError,
 )
 from aws_lambda_powertools.logging import correlation_paths
 from aws_lambda_powertools.utilities.typing import LambdaContext
@@ -34,19 +37,6 @@ app = APIGatewayHttpResolver(
     ),
     enable_validation=True,
 )
-
-app.include_router(routers.auth.router, prefix='/auth')
-app.include_router(routers.branches.router, prefix='/branches')
-app.include_router(routers.businesses.router, prefix='/businesses')
-app.include_router(routers.categories.router, prefix='/categories')
-app.include_router(routers.domains.router, prefix='/domains')
-app.include_router(routers.entities.router, prefix='/entities')
-app.include_router(routers.items.router, prefix='/items')
-app.include_router(routers.plans.router, prefix='/plans')
-app.include_router(routers.status.router, prefix='/status')
-app.include_router(routers.subcategories.router, prefix='/subcategories')
-app.include_router(routers.suspensions.router, prefix='/suspensions')
-app.include_router(routers.users.router, prefix='/users')
 
 
 @logger.inject_lambda_context(
@@ -74,7 +64,7 @@ def exception_handler(exception: Exception):
             status_code=exception.status_code,
             content_type=content_types.APPLICATION_JSON,
         )
-    elif isinstance(exception, exceptions.RequestValidationError):
+    elif isinstance(exception, RequestValidationError):
         errors = [{'loc': e['loc'], 'type': e['type']} for e in exception.errors()]
         return Response(
             body={
