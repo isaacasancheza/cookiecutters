@@ -37,6 +37,10 @@ class Main(Construct):
             parameter_name=f'/{project_name}/database/main-table/name',
         )
         self.table = table
+        self._add_global_secondary_indexes()
+
+    def _add_global_secondary_indexes(self) -> None:
+        pass
 
 
 class Database(Construct):

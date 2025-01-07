@@ -2,17 +2,16 @@ from base64 import b64decode
 from io import BytesIO
 from typing import TypeVar
 
-from aws_lambda_powertools import Logger
-from aws_lambda_powertools.event_handler.router import APIGatewayHttpRouter
-from boto3.dynamodb.conditions import Key
-from filetype import guess
-from PIL import Image
-
 from app import constants, services, settings
 from app.api import exceptions
 from app.database.models.images import Image as ImageModel
 from app.database.tables import main_table
 from app.integrations import s3
+from aws_lambda_powertools import Logger
+from aws_lambda_powertools.event_handler.router import APIGatewayHttpRouter
+from boto3.dynamodb.conditions import Key
+from filetype import guess
+from PIL import Image
 
 logger = Logger()
 GenericImage = TypeVar('GenericImage', bound=ImageModel)
@@ -24,7 +23,7 @@ def get_image_from_body(
     *,
     allowed_mime_types: list[str] = settings.IMAGE_ALLOWED_MIME_TYPES,
 ) -> tuple[Image.Image, str]:
-    """Retrieve image from body and returns image, extension, and content type."""
+    """Retrieve image from body and returns image, format."""
     if not router.current_event.is_base64_encoded or not router.current_event.body:
         logger.error('Empty body received')
         raise exceptions.UnsupportedMediaTypeError
