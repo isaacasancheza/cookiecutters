@@ -7,3 +7,4 @@ Model = TypeVar('Model', bound='BaseModel')
 
 class Connection(BaseModel, Generic[Model]):
     nodes: list[Model]
+    cursor: tuple[str, str] | None = None

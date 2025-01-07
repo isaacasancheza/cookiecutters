@@ -2,6 +2,9 @@ from os import environ
 
 from aws_lambda_powertools.utilities.parameters import get_parameters
 
+INF = 1_000_000
+DEV = bool(environ.get('POWERTOOLS_DEV'))
+
 PROJECT_NAME = environ['PROJECT_NAME']
 PARAMETERS = get_parameters(f'/{PROJECT_NAME}', decrypt=True)
 
