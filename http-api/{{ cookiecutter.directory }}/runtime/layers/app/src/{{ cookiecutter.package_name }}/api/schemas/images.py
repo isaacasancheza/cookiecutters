@@ -2,7 +2,7 @@ from abc import ABC
 from datetime import datetime
 
 from app import constants, utils
-from app.database.models.base import BaseModel
+from app.api.schemas.base import BaseModel
 from pydantic import PrivateAttr
 
 
