@@ -15,7 +15,7 @@ from typing import Any
 
 from app import settings
 from app.api import exceptions
-from aws_lambda_powertools import Logger, Tracer
+from aws_lambda_powertools import Logger
 from aws_lambda_powertools.event_handler import (
     APIGatewayHttpResolver,
     CORSConfig,
@@ -29,7 +29,6 @@ from aws_lambda_powertools.logging import correlation_paths
 from aws_lambda_powertools.utilities.typing import LambdaContext
 
 logger = Logger()
-tracer = Tracer()
 
 app = APIGatewayHttpResolver(
     cors=CORSConfig(
@@ -43,7 +42,6 @@ app = APIGatewayHttpResolver(
     clear_state=True,
     correlation_id_path=correlation_paths.API_GATEWAY_HTTP,
 )
-@tracer.capture_lambda_handler
 def handler(event: dict, context: LambdaContext) -> dict[str, Any]:
     logger.append_keys(
         route_key=event['routeKey'],

@@ -57,7 +57,6 @@ class Function(lambda_.Function):
         /,
         *,
         timeout: cdk.Duration = cdk.Duration.seconds(60),
-        tracing: lambda_.Tracing = lambda_.Tracing.DISABLED,
         memory_size: int = 128,
         source_code_directory: str,
         reserved_concurrent_executions: int | None = None,
@@ -74,7 +73,6 @@ class Function(lambda_.Function):
             ),
             handler='lambda_.handler',
             timeout=timeout,
-            tracing=tracing,
             runtime=lambda_.Runtime.PYTHON_{{ cookiecutter._runtime_python_version }},
             memory_size=memory_size,
             reserved_concurrent_executions=reserved_concurrent_executions,
@@ -95,7 +93,6 @@ class HttpApi(Construct):
         function = Function(
             self,
             'Function',
-            tracing=lambda_.Tracing.ACTIVE,
             memory_size=512,
             source_code_directory='http-api',
         )
