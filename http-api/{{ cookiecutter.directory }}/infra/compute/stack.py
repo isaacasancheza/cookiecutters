@@ -1,12 +1,10 @@
 import aws_cdk as cdk
 from constructs import Construct
-from stack_constructs import (
-    Data,
-    Functions,
-    HttpApi,
-    Layers,
-    Parameters,
-)
+from stack_constructs.data import Data
+from stack_constructs.functions import Functions
+from stack_constructs.http_api import HttpApi
+from stack_constructs.layers import Layers
+from stack_constructs.parameters import Parameters
 
 
 class Stack(cdk.Stack):
