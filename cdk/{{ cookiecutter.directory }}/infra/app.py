@@ -1,9 +1,3 @@
-# /// script
-# requires-python = ">={{ cookiecutter.python_version }}"
-# dependencies = [
-#     "aws-cdk-lib",
-# ]
-# ///
 import aws_cdk as cdk
 from stack import Stack
 
