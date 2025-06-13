@@ -1,6 +1,0 @@
-{
-    "action_name": "action-name",
-    "gatsby_directory": "gatsby-directory",
-    "iam_role_arn": "iam-role-arn",
-    "origin_bucket_name": "origin-bucket-name"
-}

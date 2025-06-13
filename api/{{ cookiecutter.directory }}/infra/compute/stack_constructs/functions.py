@@ -80,7 +80,7 @@ class Function(lambda_.Function):
         )
 
 
-class HttpApi(Construct):
+class Api(Construct):
     def __init__(
         self,
         scope: Construct,
@@ -94,10 +94,10 @@ class HttpApi(Construct):
             self,
             'Function',
             memory_size=512,
-            source_code_directory='http-api',
+            source_code_directory='api',
         )
 
-        function.add_environment('POWERTOOLS_SERVICE_NAME', 'http-api')
+        function.add_environment('POWERTOOLS_SERVICE_NAME', 'api')
 
         data.storage.cdn_bucket.grant_write(function)
         data.storage.main_bucket.grant_read_write(function)
@@ -124,13 +124,13 @@ class Functions(Construct):
             construct_id,
         )
         
-        http_api = HttpApi(
+        api = Api(
             self,
-            'HttpApi',
+            'Api',
             data=data,
         )
 
-        self._http_api = http_api
+        self._api = api
 
         cdk.Aspects.of(self).add(
             cast(
@@ -145,5 +145,5 @@ class Functions(Construct):
         )
     
     @property
-    def http_api(self):
-        return self._http_api.function
+    def api(self):
+        return self._api.function

@@ -1,3 +1,5 @@
 from boto3 import client
 
-cognito = client('cognito-idp')
+from app import settings
+
+cognito = client('cognito-idp', config=settings.BOTO3_CONFIG)

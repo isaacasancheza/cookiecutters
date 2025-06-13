@@ -16,13 +16,13 @@ Stack(
     project_name='{{ cookiecutter.project_name  }}',
     sentry_dsn='',
     sentry_environment='',
-    http_api_name='{{ cookiecutter.project_name }}',
-    http_api_domain_name='',
-    http_api_domain_zone_name='',
-    http_api_domain_record_name='',
-    http_api_domain_hosted_zone_id='',
-    http_api_domain_name_certificate_arn='',
-    param_http_api_cors_allow_origin='',
+    api_name='{{ cookiecutter.project_name }}',
+    api_domain_name='',
+    api_domain_zone_name='',
+    api_domain_record_name='',
+    api_domain_hosted_zone_id='',
+    api_domain_name_certificate_arn='',
+    param_api_cors_allow_origin='',
 )
 
 app.synth()

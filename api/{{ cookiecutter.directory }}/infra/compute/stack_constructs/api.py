@@ -24,20 +24,20 @@ class LambdaIntegration(HttpLambdaIntegration):
         return
 
 
-class HttpApi(Construct):
+class Api(Construct):
     def __init__(
         self,
         scope: Construct,
         construct_id: str,
         /,
         *,
-        http_api_name: str,
-        http_api_function: lambda_.Function,
-        http_api_domain_name: str,
-        http_api_domain_zone_name: str,
-        http_api_domain_record_name: str,
-        http_api_domain_hosted_zone_id: str,
-        http_api_domain_name_certificate_arn: str,
+        api_name: str,
+        api_function: lambda_.Function,
+        api_domain_name: str,
+        api_domain_zone_name: str,
+        api_domain_record_name: str,
+        api_domain_hosted_zone_id: str,
+        api_domain_name_certificate_arn: str,
     ) -> None:
         super().__init__(
             scope,
@@ -47,20 +47,20 @@ class HttpApi(Construct):
         certificate = acm.Certificate.from_certificate_arn(
             self,
             'Certificate',
-            certificate_arn=http_api_domain_name_certificate_arn,
+            certificate_arn=api_domain_name_certificate_arn,
         )
 
         domain_name = apigwv2.DomainName(
             self,
             'DomainName',
-            domain_name=http_api_domain_name,
+            domain_name=api_domain_name,
             certificate=certificate,
         )
 
         api = apigwv2.HttpApi(
             self,
-            'HttpApi',
-            api_name=http_api_name,
+            'Api',
+            api_name=api_name,
             create_default_stage=True,
             disable_execute_api_endpoint=True,
             default_domain_mapping=apigwv2.DomainMappingOptions(
@@ -72,7 +72,7 @@ class HttpApi(Construct):
             'Integration',
             cast(
                 lambda_.IFunction,
-                http_api_function,
+                api_function,
             ),
         )
 
@@ -94,7 +94,7 @@ class HttpApi(Construct):
                 )
 
         source_arn = f'arn:{cdk.Aws.PARTITION}:execute-api:{cdk.Aws.REGION}:{cdk.Aws.ACCOUNT_ID}:{api.api_id}/*'
-        http_api_function.add_permission(
+        api_function.add_permission(
             'HttpApiPermissions',
             action='lambda:InvokeFunction',
             principal=cast(
@@ -107,8 +107,8 @@ class HttpApi(Construct):
         hosted_zone = route53.HostedZone.from_hosted_zone_attributes(
             self,
             'HostedZone',
-            zone_name=http_api_domain_zone_name,
-            hosted_zone_id=http_api_domain_hosted_zone_id,
+            zone_name=api_domain_zone_name,
+            hosted_zone_id=api_domain_hosted_zone_id,
         )
 
         target = route53.RecordTarget.from_alias(
@@ -125,6 +125,6 @@ class HttpApi(Construct):
             self,
             'Record',
             zone=hosted_zone,
-            record_name=http_api_domain_record_name,
+            record_name=api_domain_record_name,
             target=target,
         )

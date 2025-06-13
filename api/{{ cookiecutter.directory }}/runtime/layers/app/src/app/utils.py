@@ -2,8 +2,12 @@ from base64 import b64decode, b64encode
 from json import dumps, loads
 from typing import cast
 from uuid import uuid4
+from datetime import datetime, timezone
 
 from app import constants
+
+def utcnow() -> datetime:
+    return datetime.now(timezone.utc)
 
 
 def encode_tuple(
