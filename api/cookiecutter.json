@@ -4,6 +4,6 @@
     "data_stack_name": "{{ cookiecutter.project_name }}-data",
     "compute_stack_name": "{{ cookiecutter.project_name }}-compute",
     "vscode_workspace_name": "{{ cookiecutter.project_name }}-backend",
-    "python_version": 3.13,
-    "_runtime_python_version": "{{ cookiecutter.python_version|replace('.', '_') }}"
+    "python_version": "3.13",
+    "__runtime_python_version": "{{ cookiecutter.python_version|replace('.', '_') }}"
 }

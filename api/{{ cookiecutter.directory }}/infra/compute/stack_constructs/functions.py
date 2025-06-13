@@ -67,13 +67,13 @@ class Function(lambda_.Function):
             code=lambda_.Code.from_asset(
                 path=f'../../runtime/functions/{source_code_directory}',
                 bundling=cdk.BundlingOptions(
-                    image=lambda_.Runtime.PYTHON_{{ cookiecutter._runtime_python_version }}.bundling_image,
+                    image=lambda_.Runtime.PYTHON_{{ cookiecutter.__runtime_python_version }}.bundling_image,
                     command=['bash', '-c', 'rsync -r lambda_.py /asset-output'],
                 ),
             ),
             handler='lambda_.handler',
             timeout=timeout,
-            runtime=lambda_.Runtime.PYTHON_{{ cookiecutter._runtime_python_version }},
+            runtime=lambda_.Runtime.PYTHON_{{ cookiecutter.__runtime_python_version }},
             memory_size=memory_size,
             reserved_concurrent_executions=reserved_concurrent_executions,
             architecture=lambda_.Architecture.ARM_64,

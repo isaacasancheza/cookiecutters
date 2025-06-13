@@ -18,7 +18,7 @@ class Layer(lambda_.LayerVersion):
             code=lambda_.Code.from_asset(
                 path=f'../../runtime/layers/{source_code_directory}',
                 bundling=cdk.BundlingOptions(
-                    image=lambda_.Runtime.PYTHON_{{ cookiecutter._runtime_python_version }}.bundling_image,
+                    image=lambda_.Runtime.PYTHON_{{ cookiecutter.__runtime_python_version }}.bundling_image,
                     command=[
                         'bash',
                         '-c',
@@ -27,7 +27,7 @@ class Layer(lambda_.LayerVersion):
                 ),
             ),
             compatible_runtimes=[
-                lambda_.Runtime.PYTHON_{{ _runtime_python_version }},
+                lambda_.Runtime.PYTHON_{{ cookiecutter.__runtime_python_version }},
             ],
             compatible_architectures=[
                 lambda_.Architecture.ARM_64,
