@@ -1,3 +1,4 @@
+import json
 from typing import cast
 
 import aws_cdk as cdk
@@ -10,13 +11,33 @@ from aws_cdk import aws_route53_targets as targets
 from aws_cdk.aws_apigatewayv2_integrations import HttpLambdaIntegration
 from constructs import Construct
 
-routes = {
-    '/': {
-        '/{id}': [
-            apigwv2.HttpMethod.GET,
-        ],
-    }
-}
+from stack_constructs.functions import Functions
+
+
+def get_routes(
+    file_path: str,
+    /,
+) -> dict[str, dict[str, list[apigwv2.HttpMethod]]]:
+    with open(file_path, 'r') as f:
+        spec = json.load(f)
+
+    routes = {}
+    for path, methods in spec['paths'].items():
+        segments = [s for s in path.split('/') if s]
+        if not segments:
+            continue
+
+        resource = '/' + segments[0]
+        sub_path = '/' + '/'.join(segments[1:]) if len(segments) > 1 else ''
+
+        if resource not in routes:
+            routes[resource] = {}
+
+        routes[resource][sub_path] = [
+            apigwv2.HttpMethod[method.upper()] for method in methods.keys()
+        ]
+
+    return routes
 
 
 class LambdaIntegration(HttpLambdaIntegration):
@@ -24,15 +45,14 @@ class LambdaIntegration(HttpLambdaIntegration):
         return
 
 
-class Api(Construct):
+class API(Construct):
     def __init__(
         self,
         scope: Construct,
         construct_id: str,
         /,
         *,
-        api_name: str,
-        api_function: lambda_.Function,
+        functions: Functions,
         api_domain_name: str,
         api_domain_zone_name: str,
         api_domain_record_name: str,
@@ -59,8 +79,8 @@ class Api(Construct):
 
         api = apigwv2.HttpApi(
             self,
-            'Api',
-            api_name=api_name,
+            'API',
+            api_name=cdk.Names.unique_resource_name(self),
             create_default_stage=True,
             disable_execute_api_endpoint=True,
             default_domain_mapping=apigwv2.DomainMappingOptions(
@@ -72,7 +92,7 @@ class Api(Construct):
             'Integration',
             cast(
                 lambda_.IFunction,
-                api_function,
+                functions.api,
             ),
         )
 
@@ -85,6 +105,7 @@ class Api(Construct):
             integration=integration,
         )
 
+        routes = get_routes('openapi.json')
         for prefix in routes:
             for path, methods in routes[prefix].items():
                 api.add_routes(
@@ -94,8 +115,8 @@ class Api(Construct):
                 )
 
         source_arn = f'arn:{cdk.Aws.PARTITION}:execute-api:{cdk.Aws.REGION}:{cdk.Aws.ACCOUNT_ID}:{api.api_id}/*'
-        api_function.add_permission(
-            'HttpApiPermissions',
+        functions.api.add_permission(
+            'APIPermissions',
             action='lambda:InvokeFunction',
             principal=cast(
                 iam.IPrincipal,

@@ -16,7 +16,6 @@ Stack(
     project_name='{{ cookiecutter.project_name  }}',
     sentry_dsn='',
     sentry_environment='',
-    api_name='{{ cookiecutter.project_name }}',
     api_domain_name='',
     api_domain_zone_name='',
     api_domain_record_name='',
